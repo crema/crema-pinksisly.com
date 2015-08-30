@@ -1,0 +1,97 @@
+<% content_for :content do %>
+  <% product = @review.product %>
+  <%= content_tag :div, id: 'main', data: {review_id: @review.id} do %>
+    <%= content_tag :div, id: 'page-container', data: {total_pages: @photos_count, current_page: @photo_index} do %>
+      <% (1..@photos_count).each do |i| %>
+        <% image_url = @review.image(i).url %>
+        <%= content_tag :div, class: "image-container page page-#{i}", data: {page: i, image_url: image_url} do %>
+          <%= image_tag image_url, class: 'smooth photo without-margin' %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <div id="review-photo-popup-topbar" class="hide-toggle hidden">
+    <div class="share-container">
+      <div class="share-toggle">
+        <div class="button-icon"><i class="fa fa-share-alt"></i></div>
+        <div class="button-name">공유</div>
+      </div>
+      <div class="share-buttons hidden">
+        <%= content_tag :a, data: {url: share_mobile_review_path(@review), media: 'instagram'}, class: 'share-button' do %>
+          <div class="button-icon"><i class="fa fa-instagram"></i></div>
+          <div class="button-name">인스타그램</div>
+        <% end %>
+        <%= content_tag :a, data: {url: share_mobile_review_path(@review), media: 'kakao'}, class: 'share-button' do %>
+          <div class="button-icon"><i class="fa fa-comment"></i></div>
+          <div class="button-name">카카오스토리</div>
+        <% end %>
+        <%= content_tag :a, data: {url: share_mobile_review_path(@review), media: 'twitter'}, class: 'share-button' do %>
+          <div class="button-icon"><i class="fa fa-twitter"></i></div>
+          <div class="button-name">트위터</div>
+        <% end %>
+      </div>
+    </div>
+    <div class="photo-expand">
+      <div class="button-icon"><i class="fa fa-search-plus"></i></div>
+      <div class="button-name">원본</div>
+    </div>
+    <div class="photo-expand">
+      <div class="button-icon"><i class="fa fa-search-plus"></i></div>
+      <div class="button-name">원본</div>
+    </div>
+  </div>
+  <div class="close-button hidden" id="photo-close">
+    <div class="button-icon"><i class="fa fa-arrow-left"></i></div>
+    <div class="button-name">뒤로</div>
+  </div>
+  <div class="index-indicator without-summary">
+    <% (1..@photos_count).each do |i| %>
+      <span class="indicator indicator-<%= i %>"></span>
+    <% end %>
+  </div>
+  <div class="background-shadow hide-toggle hidden"></div>
+  <div id="review-photo-popup-review-summary" class="hide-toggle hidden">
+    <div class="review-message">
+      <%= @review.message %>
+    </div>
+    <div class="review-top">
+      <%= link_to mobile_review_url(@review), class: 'link-to-review' do %>
+        <div class="product-thumbnail">
+          <%= image_tag(product.image.url(:extra_small), width: 28, height: 28) if product %>
+        </div>
+        <div class="product-user-name">
+          <div class="product-name">
+            <%= product ? product.name : '-' %>
+          </div>
+          <div class="user-name">
+            <%= @review.user_display_name %>
+          </div>
+        </div>
+        <div class="show-review-detail">
+          <i class="fa fa-heart"></i><i class="fa fa-comment"></i>
+        </div>
+      <% end %>
+    </div>
+    <div class="index-indicator with-summary">
+      <% (1..@photos_count).each do |i| %>
+        <span class="indicator indicator-<%= i %>"></span>
+      <% end %>
+    </div>
+  </div>
+  <script id="dialog-share-message-tmpl" type="text/x-jquery-tmpl">
+    <div id="dialog-share-message" class="modal modal-social-media">
+      <div class="set-share-message">
+        <div class="message-input-container">
+          <h4>공유할 문구를 입력해 주세요</h4>
+          <div class="info-message"></div>
+          <div class="section-input">
+            <%= text_area_tag :message, @review.message.gsub(/\s/, ' '), class: 'message-text-input', data: {sns_hash_tag_length: get_sns_hash_tag_length}, placeholder: '공유할 문구를 입력해 주세요' %>
+          </div>
+          <div class="section-submit">
+            <%= content_tag :div, '확인', class: 'btn btn-default submit' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+<% end %>
