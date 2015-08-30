@@ -1,0 +1,241 @@
+@import "../../lib/common";
+@import "compass/css3/transition";
+
+body.reviews.show {
+  color: #575757;
+
+  #content {
+    font-size: 11px;
+    padding-top: 57px;
+  }
+  
+  .panel-product-button {
+    width: 30%;
+    padding: 15px;
+    margin: 0 auto;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    text-align: center;
+  }
+
+  .panel-heading.thin-black {
+    height: 5px;
+    background: #464546;
+    margin: -1px;
+  }
+
+  .like-action-container, .user-grade-container {
+    line-height: 47px;
+    font-size: 12px;
+    padding-left: 12px;
+    position: relative;
+
+    .likable {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 0;
+
+      a.btn {
+        width: 61px;
+        font-size: 12px;
+        display: inline-block;
+        border-left: 1px solid #f4f4f4;
+        text-align: center;
+        color: #878787;
+        @include transition(all 0.4s ease);
+      }
+    }
+
+    .liked .btn.link-like {
+      background-color: #5e5e5e;
+      border-color: #5e5e5e;
+      color: white;
+    }
+
+    .unliked .btn.link-unlike {
+      background-color: #5e5e5e;
+      border-color: #5e5e5e;
+      color: white;
+    }
+  }
+
+  .user-grade-container {
+    @include clearfix;
+    padding-right: 12px;
+
+    .grade-info {
+      float: right;
+
+      .user-grade-icon {
+        vertical-align: middle;
+        max-width: 70px;
+        max-height: 40px;
+        padding-right: 6px;
+        position: relative;
+        top: -1px;
+      }
+    }
+  }
+
+  .likes-container {
+    position: relative;
+
+    .like-result {
+      line-height: 47px;
+      padding-left: 12px;
+    }
+
+    @media (max-width:330px) {
+      .like-result {
+        letter-spacing: -1px;
+      }
+    }
+
+    .r-contents {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      text-align: right;
+
+      .date {
+        color: #d0d0d0;
+      }
+    }
+  }
+
+  .body-container {
+    .panel-heading {
+      height: 40px;
+      position: relative;
+      font-size: 13px;
+      padding-top: 13px;
+      padding-left: 12px;
+
+      .title {
+        display: inline-block;
+        font-weight: bold;
+        color: #2e2e2e;
+        margin-right: 22px;
+      }
+
+      .star-rating-container {
+        display: inline-block;
+      }
+
+      .score-text {
+        position: absolute;
+        top: 13px;
+        right: 14px;
+        color: #575757;
+      }
+    }
+
+    .panel-body {
+      padding: 16px 6px;
+
+      .message {
+        padding: 0 4px;
+        word-wrap: break-word;
+      }
+
+      ul.images {
+        margin-top: 16px;
+
+        li {
+          margin-right: -3px;
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .panel-review {
+    .author-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 68px;
+    }
+  }
+
+  .panel-new-comment {
+    margin-top: -6px;
+  }
+
+  .comment-container > div.first-child {
+    position: relative;
+
+    .panel-body .comments-container ul li .inner {
+      padding-top: 14px;
+    }
+
+    &:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: #464546;
+      display: inline-block;
+      content: "";
+    }
+
+    &.panel-new-comment {
+      margin-top: 10px;
+
+      .new-comments {
+        padding-top: 8px;
+
+        button.btn {
+          height: 51px;
+          line-height: 53px;
+        }
+      }
+    }
+  }
+
+  .review-options {
+    border: 1px solid #e1e1e1;
+    padding: 15px;
+    margin-bottom: 17px;
+
+    .review-option {
+      @include clearfix;
+      margin-top: 2px;
+
+      .option-key {
+        margin-left: 10px;
+        color: #bbb;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+
+      .option-value {
+        margin-left: 3px;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      .review-option-title {
+        float: left;
+        width: 30%;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .review-option-content {
+        float: left;
+        width: 70%;
+        color: #808080;
+      }
+    }
+  }
+}
