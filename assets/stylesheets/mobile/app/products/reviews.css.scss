@@ -1,0 +1,29 @@
+@import "../../lib/common";
+
+body.products.reviews {
+  #content {
+    padding-top: $mobile-topbar-height;
+  }
+
+  .product {
+    margin-top: 11px;
+    margin-bottom: 15px;
+  }
+
+  li.review {
+    .l-contents.image {
+      padding-right: 10px;
+    }
+
+    .panel-review {
+      .message {
+        white-space: normal;
+        max-height: 34px;
+      }
+      
+      .star-wrap {
+        margin-bottom: 6px;
+      }
+    }
+  }
+}
