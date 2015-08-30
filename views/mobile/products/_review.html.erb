@@ -1,0 +1,62 @@
+<% set_product_link_type = false if !local_assigns[:set_product_link_type] %>
+<% set_reviews_new_link = false if !local_assigns[:set_reviews_new_link] %>
+<% reviews = product.visible_reviews %>
+<% tag = local_assigns[:tag] ? tag : :div %>
+<%= content_tag_for tag, product do %>
+  <div class="l-contents">
+    <div class="image-container">
+      <div>
+        <%= link_to product.url, class: 'link-product-image' do %>
+          <%= image_tag product.image_url(:middle), class: 'smooth', alt: product.name %>
+        <% end %>
+        <%= image_tag manual_asset_url('widgets/product_image_cover.png'), class: 'cover' %>
+        <div class="wrap">
+          <% if current_user && @brand.review_show_first_photo && current_user.sub_order_for(product.id) && product.first_photo_review? %>
+            <div class="first-review-reward">첫 포토리뷰! <%= @brand.review_popup_first_reward_message %></div>
+          <% end %>
+          <div class="product-name"><%= product.name %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="r-contents">
+    <% review_block = capture do %>
+      <div class="content">
+        <div class="title">리뷰</div>
+        <div class="value"><%= reviews.count %></div>
+      </div>
+      <% if @brand.review_show_score_summary %>
+        <div class="content">
+          <div class="title">평점</div>
+          <% average_score = product.score %>
+          <div class="value"><%= average_score >= 10.0 ? 10 : average_score || '-' %></div>
+        </div>
+      <% end %>
+    <% end %>
+    <% if action_name == 'reviews' || action_name == 'index' %>
+      <%= review_block %>
+    <% else %>
+      <%= link_to review_block, reviews_mobile_products_path(product_id: product.id), remote: true, class: 'link-review' %>
+    <% end %>
+    <% if set_product_link_type == :mall_product %>
+      <div class="action-container">
+        <i class="fa fa-angle-right"></i>
+      </div>
+    <% elsif set_product_link_type == :product_review_list %>
+    <% elsif local_assigns[:editable_review] %>
+      <div class="action-container">
+        <%= link_to '리뷰수정', edit_mobile_review_path(local_assigns[:editable_review]), remote: true %>
+      </div>
+    <% elsif display_write_form?(product) %>
+      <div class="action-container">
+        <%= link_to '리뷰쓰기', new_mobile_review_path(product_id: product.id, review_source: review_source), remote: true, data: {login_required: @brand.review_allowed_author_type != ReviewAllowedAuthorType::EVERYONE} %>
+      </div>
+    <% end %>
+  </div>
+  <% if set_product_link_type == :mall_product %>
+    <%= content_tag :a, nil, data: {product_reviews_url: reviews_mobile_products_url(product_code: product.code)}, class: 'link-product' %>
+  <% end %>
+  <% if set_reviews_new_link && display_write_form?(product) %>
+    <%= link_to '', new_mobile_review_path(product_id: product.id, review_source: review_source), class: 'link-reviews-new', data: {login_required: @brand.review_allowed_author_type != ReviewAllowedAuthorType::EVERYONE} %>
+  <% end %>
+<% end %>

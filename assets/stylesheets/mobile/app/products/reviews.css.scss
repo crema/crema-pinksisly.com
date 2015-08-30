@@ -4,10 +4,17 @@ body.products.reviews {
   #content {
     padding-top: $mobile-topbar-height;
   }
+  
+  .panel {
+    width: 30%; 
+    padding: 15px; margin: 0 auto; 
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    text-align: center;
+  }
 
   .product {
     margin-top: 11px;
-    margin-bottom: 15px;
   }
 
   li.review {
