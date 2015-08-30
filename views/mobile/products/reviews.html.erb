@@ -8,7 +8,7 @@
       <div class="panel-heading">
         <%= render @product, review_source: WrittenSource::BRAND_MOBILE_PRODUCT_REVIEWS %>
       </div>
-      <a href="<%= @product.url%>"><div class="panel-product-button">제품 보러가기</div></a>
+      <div><a href="<%= @product.url%>"><div class="panel-product-button">제품 보러가기</div></a></div>
       <div class="panel-body">
         <% if @reviews.empty? %>
           <ul class="reviews"><%= t('reviews.no_reviews') %></ul>
