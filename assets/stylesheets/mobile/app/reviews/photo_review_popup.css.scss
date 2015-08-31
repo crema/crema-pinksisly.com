@@ -107,7 +107,16 @@ body.photo_review_popup {
   }
   
   .product-move {
-    left: 145px;
+    left: 143px;
+    
+    .clothes-icon {
+      width: 21px;
+      margin-top: 2px;
+    }
+    
+    .button-name {
+      margin-top: -6px;
+    }
   }
 
   #photo-close {
