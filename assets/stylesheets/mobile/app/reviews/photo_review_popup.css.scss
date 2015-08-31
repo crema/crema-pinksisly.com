@@ -1,0 +1,391 @@
+@import "../lib/common";
+@import "../lib/arrow";
+@import "../lib/icons";
+@import "compass/css3/appearance";
+@import "compass/css3/transition";
+
+@-webkit-keyframes image_blur {
+  from { -webkit-filter: blur(0px);}
+  to { -webkit-filter: blur(4px);}
+}
+
+body.photo_review_popup {
+  background-color: #111;
+  @include transition(background-color 0.2s);
+  color: white;
+
+  .topbar-default {
+    display: none;
+  }
+
+  &.loading {
+    background-color: black;
+
+    #main {
+      opacity: 0;
+    }
+  }
+
+  #review-photo-popup-topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C */
+    height: 75px;
+
+  }
+
+  .share-container, .photo-expand, #photo-close {
+    position: absolute;
+    top: 12px;
+    width: 40px;
+    text-align: center;
+    opacity: 0.85;
+
+    .button-icon {
+      font-size: 20px;
+    }
+
+    .button-name {
+      padding-top: 3px;
+      font-size: 11px;
+    }
+  }
+
+  .share-container {
+    left: 13px;
+
+    .share-buttons {
+      margin-left: -8px;
+
+      .share-button {
+        display: block;
+        margin-top: 5px;
+        width: 55px;
+        padding: 6px 0;
+        letter-spacing: -1px;
+        border-radius: 3px;
+        background: rgba(0,0,0,0.55);
+        font-size: 10px;
+        color: white;
+
+        &:first-child {
+          margin-top: 13px;
+          position: relative;
+
+          &:after {
+            position: absolute;
+            top: -7px;
+            left: 21px;
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid rgba(0,0,0,0.55);
+            content: '';
+          }
+        }
+
+        .button-icon {
+          font-size: 23px;
+        }
+
+        .button-name {
+          padding-top: 2px;
+          font-size: 10px;
+        }
+      }
+    }
+  }
+
+  .photo-expand {
+    left: 75px;
+  }
+
+  #photo-close {
+    right: 12px;
+    opacity: 1;
+    @include transition(opacity 0.3s);
+
+    &.hidden {
+      opacity: 0.4;
+      display: block;
+    }
+  }
+
+  .background-shadow {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.15) 85%, rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(bottom, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.15) 85%, rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(bottom, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.15) 85%, rgba(0,0,0,0) 100%); /* IE10+ */
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.15) 85%, rgba(0,0,0,0) 100%); /* W3C */
+  }
+
+  #review-photo-popup-review-summary {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+
+    .review-top {
+      border-top: 1px solid rgba(255,255,255,0.5);
+      padding: 10px 3px 0 3px;
+      margin-top: 12px;
+      @include clearfix;
+
+      .link-to-review {
+        @include clearfix;
+        display: block;
+      }
+
+      .product-thumbnail, .product-user-name {
+        float: left;
+        height: 28px;
+      }
+
+      .product-user-name {
+        width: 190px;
+        padding-left: 6px;
+
+        .product-name {
+          width: 190px;
+          overflow: hidden;
+          line-height: 1;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          font-size: 13px;
+          color: white;
+        }
+
+        .user-name {
+          font-size: 10px;
+          padding-top: 2px;
+          color: white;
+        }
+      }
+
+      .show-review-detail {
+        float: right;
+        display: block;
+        color: rgba(255,255,255,0.9);
+        font-size: 18px;
+        padding-top: 2px;
+
+        i.fa {
+          padding-right: 6px;
+
+          &:last-child {
+            padding-left: 19px;
+          }
+        }
+      }
+    }
+
+    .review-message {
+      font-size: 14px;
+      line-height: 20px;
+      height: 71px;
+      overflow: scroll;
+      padding: 0 3px;
+    }
+  }
+
+  #main {
+    min-height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    opacity: 1;
+    white-space: nowrap;
+    @include transition(opacity 0.8s ease);
+
+    #page-container {
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      -webkit-transform: translate3d(0, 0, 0);
+
+      &.animating {
+        @include transition(-webkit-transform 0.2s ease);
+      }
+
+      .page {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: none;
+        overflow-x: hidden;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      &[data-current-page='1'] {
+        .page-1 {
+          display: block;
+          -webkit-transform: translate3d(0, 0, 0);
+        }
+
+        .page-2 {
+          display: block;
+          -webkit-transform: translate3d(100%, 0, 0);
+        }
+
+        .page-3 {
+          display: block;
+           -webkit-transform: translate3d(200%, 0, 0);
+        }
+
+        .page-4 {
+          display: block;
+          -webkit-transform: translate3d(300%, 0, 0);
+        }
+      }
+
+      &[data-current-page='2'] {
+        .page-1 {
+          display: block;
+          -webkit-transform: translate3d(-100%, 0, 0);
+        }
+
+        .page-2 {
+          display: block;
+          -webkit-transform: translate3d(0, 0, 0);
+        }
+
+        .page-3 {
+          display: block;
+           -webkit-transform: translate3d(100%, 0, 0);
+        }
+
+        .page-4 {
+          display: block;
+          -webkit-transform: translate3d(200%, 0, 0);
+        }
+      }
+
+      &[data-current-page='3'] {
+        .page-1 {
+          display: block;
+          -webkit-transform: translate3d(-200%, 0, 0);
+        }
+
+        .page-2 {
+          display: block;
+          -webkit-transform: translate3d(-100%, 0, 0);
+        }
+
+        .page-3 {
+          display: block;
+           -webkit-transform: translate3d(0, 0, 0);
+        }
+
+        .page-4 {
+          display: block;
+          -webkit-transform: translate3d(100%, 0, 0);
+        }
+      }
+
+      &[data-current-page='4'] {
+        .page-1 {
+          display: block;
+          -webkit-transform: translate3d(-300%, 0, 0);
+        }
+
+        .page-2 {
+          display: block;
+          -webkit-transform: translate3d(-200%, 0, 0);
+        }
+
+        .page-3 {
+          display: block;
+           -webkit-transform: translate3d(-100%, 0, 0);
+        }
+
+        .page-4 {
+          display: block;
+          -webkit-transform: translate3d(0, 0, 0);
+        }
+      }
+    }
+  }
+
+  .index-indicator {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    height: 20px;
+    text-align: center;
+    @include transition(opacity 0.3s ease);
+
+    &.with-summary {
+      top: -16px;
+    }
+
+    &.without-summary {
+      bottom: 15px;
+      opacity: 0;
+
+      &.hide-summary {
+        opacity: 1;
+      }
+    }
+
+    .indicator {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: white;
+      border-radius: 6px;
+      margin: 1px;
+      opacity: 0.4;
+      box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+      @include transition(opacity 0.3s ease);
+
+      &.selected {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.iphone-before-5 {
+    #review-photo-popup-review-summary .review-message {
+      height: 47px;
+    }
+
+    .share-container .share-buttons .share-button {
+      margin-top: 3px;
+      padding: 4px 0;
+
+      .button-name {
+        padding-top: 0;
+      }
+
+      &:first-child:after {
+        content: none;
+      }
+    }
+  }
+
+  &.iphone-before-5, &.iphone-5 {
+    #review-photo-popup-review-summary .review-top .show-review-detail i.fa {
+      &:last-child {
+       padding-left: 14px;
+      }
+    }
+  }
+}
