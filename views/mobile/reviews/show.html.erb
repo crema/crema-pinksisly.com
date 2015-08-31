@@ -8,7 +8,7 @@
         <%= render @review.product, review_source: WrittenSource::BRAND_MOBILE_REVIEW_DETAIL, editable_review: @review.editable?(current_user) ? @review : nil %>
       </div>
     <% end %>
-    <div><a href="<%= @review.product.url%>"><div class="panel-product-button" style="width: 30%; padding: 15px; margin: 0 auto;background: rgba(0,0,0,0.85); color: #fff; text-align: center;">제품 보러가기</div></a></div>    
+    <div><a href="<%= @review.product.url%>"><div class="panel-product-button">제품 보러가기</div></a></div>    
     <div class="panel-body no-border">
       <div class="panel sub-panel likes-container">
         <div class="panel-heading thin-black"></div>

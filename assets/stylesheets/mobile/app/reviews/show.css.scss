@@ -9,7 +9,12 @@ body.reviews.show {
   }
 
   .panel-product-button {
-    font-size: 12px;
+    width: 30%;
+    padding: 15px;
+    margin: 0 auto;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    text-align: center;
   }
 
   #content {
