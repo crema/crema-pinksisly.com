@@ -1,0 +1,45 @@
+@import "../lib/common";
+@import "compass/utilities/sprites";
+$sprites-sprite-dimensions: true;
+@import "pc/sprites/*.png";
+@include all-sprites-sprites;
+
+.fa {
+  @include inline-block;
+  vertical-align: middle;
+}
+
+.fa-check-circle-o {
+  @include sprites-sprite(fa-check-circle-o);
+}
+
+.fa-times-circle {
+  @include sprites-sprite(fa-times-circle);
+}
+
+.fa-bookmark {
+  margin-bottom: -1px;
+  @include sprites-sprite(fa-bookmark);
+}
+
+.fa-camera {
+  margin-bottom: -2px;
+  @include sprites-sprite(fa-camera);
+}
+
+.fa-comment {
+  margin-bottom: -2px;
+  @include sprites-sprite(fa-comment);
+}
+
+.fa-heart {
+  @include sprites-sprite(fa-heart);
+}
+
+.fa-heart-liked {
+  @include sprites-sprite(fa-heart-liked);
+}
+
+.no-comment .fa-comment, .fa-no-comment {
+  @include sprites-sprite(fa-no-comment);
+}
