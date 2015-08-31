@@ -39,7 +39,7 @@ body.photo_review_popup {
 
   }
 
-  .share-container, .photo-expand, #photo-close {
+  .share-container, .photo-expand, #photo-close, .product-move {
     position: absolute;
     top: 12px;
     width: 40px;
@@ -104,6 +104,10 @@ body.photo_review_popup {
 
   .photo-expand {
     left: 75px;
+  }
+  
+  .product-move {
+    left: 175px;
   }
 
   #photo-close {
