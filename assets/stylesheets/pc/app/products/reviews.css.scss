@@ -15,6 +15,7 @@ body.products.reviews, #review-edit-form {
 
   .widget-heading {
     border-bottom: 0;
+    margin-bottom: 0;    
 
     .sort-type {
       color: black;
@@ -22,10 +23,6 @@ body.products.reviews, #review-edit-form {
     
     .review-options-search ul.review_option_types li.review_option_type {
       color: black;
-    }
-    
-    .widget-heading {
-      margin-bottom: 0px;
     }
   }
 
