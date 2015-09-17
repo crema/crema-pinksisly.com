@@ -3,9 +3,9 @@
     <div class="review-content-summary">
       <% review_position = @first_review_position_in_page - review_counter if @first_review_position_in_page %>
       <div class="col index"><%= @first_review_position_in_page ? review_position : review.id %></div>
-      <div class="col photo">
+      <div class="col photo list">
         <% if review.images_count > 0 %>
-          <%= image_tag review.image(1).url(:thumbnail), class: 'smooth', alt: review.title, width: 30, height: 30 %>
+          <%= image_tag review.image(1).url(:thumbnail), class: 'smooth', alt: review.title, width: 35, height: 35 %>
         <% end %>
       </div>
       <div class="col title">
