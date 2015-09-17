@@ -5,7 +5,7 @@
       <div class="col index"><%= @first_review_position_in_page ? review_position : review.id %></div>
       <div class="col photo">
         <% if review.images_count > 0 %>
-          <%= image_tag review.image(0).url(null), class: 'smooth', alt: review.title %>
+          <%= image_tag review.images[0].url(:thumbnail), class: 'smooth', alt: review.title %>
         <% end %>
       </div>
       <div class="col title">
