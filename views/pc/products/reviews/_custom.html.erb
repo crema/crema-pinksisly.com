@@ -1,7 +1,6 @@
 <% widget_style = WidgetStyle.key_string(widget.widget_style) %>
 <% title widget.name %>
 <%= content_for :content do %>
-  CUSTOM
   <%= render 'products/reviews/product_info' %>
   <%= content_tag :div, class: "product_reviews_#{widget_style}" do %>
     <% display_write_form = brand.review_writable? && display_write_form?(@product) && !@external_widget %>
