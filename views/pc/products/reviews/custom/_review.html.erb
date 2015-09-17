@@ -4,7 +4,9 @@
       <% review_position = @first_review_position_in_page - review_counter if @first_review_position_in_page %>
       <div class="col index"><%= @first_review_position_in_page ? review_position : review.id %></div>
       <div class="col photo">
-        <%= content_tag :span, nil, class: "#{'sprites-camera' if review.images_count > 0}" %>
+        <% if review.images_count > 0 %>
+          ok
+        <% end %>
       </div>
       <div class="col title">
         <%= content_tag :a, review.message.first_line(Settings.max_review_chars_per_line).html_safe, class: 'link-expand' %>
