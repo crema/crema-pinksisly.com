@@ -10,11 +10,7 @@
       </div>
       <div class="col author"><%= review_user_display_name(review) %></div>
       <div class="col score">
-        <div class="star-rating-container">
-          <% (1..5).each do |i| %>
-            <%= content_tag :span, nil, class: "#{review.score && i > review.score ? 'sprites-star-empty' : 'sprites-star-full'}" %>
-          <% end %>
-        </div>
+        <%= render 'reviews/star_rating', score: review.score %>
       </div>
       <div class="review-content-expanded"></div>
     </div>

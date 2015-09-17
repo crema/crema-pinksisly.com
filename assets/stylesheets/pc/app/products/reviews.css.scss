@@ -19,12 +19,20 @@ body.products.reviews, #review-edit-form {
     .sort-type {
       color: black;
     }
+    
+    .review-options-search ul.review_option_types li.review_option_type {
+      color: black;
+    }
+    
+    .widget-heading {
+      margin-bottom: 0px;
+    }
   }
 
   ul.header {
     line-height: 32px;
-    border-top: 3px solid #414141;
-    border-bottom: 1px solid #9f9f9f;
+    border-top: 3px solid #dadada;
+    border-bottom: 1px solid #dadada;
     font-weight: bold;
     color: #4c4c4c;
 
