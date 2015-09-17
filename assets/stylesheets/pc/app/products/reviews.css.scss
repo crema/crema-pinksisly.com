@@ -72,8 +72,9 @@ body.products.reviews, #review-edit-form {
         left: 95px;
       }
       
-      &.photo .list {
+      &.photo.list {
         top: 3px;
+        line-height: 40px;
       }
 
       &.title {
