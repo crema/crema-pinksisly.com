@@ -3,6 +3,10 @@
 @import "compass/css3/opacity";
 
 body.products.reviews, #review-edit-form {
+  .product_reviews_summary {
+    margin-top: 20px;
+  }
+  
   .widget {
     &.new-review {
       padding-bottom: 0;
@@ -11,6 +15,10 @@ body.products.reviews, #review-edit-form {
     &.widget-reviews {
       padding-top: 38px;
     }
+  }
+  
+  .widget-body {
+    margin-top: 20px;
   }
 
   .widget-heading {
@@ -29,7 +37,7 @@ body.products.reviews, #review-edit-form {
 
   ul.header {
     line-height: 32px;
-    border-top: 3px solid #dadada;
+    border-top: 1px solid #dadada;
     border-bottom: 1px solid #dadada;
     font-weight: bold;
     color: #4c4c4c;
@@ -75,6 +83,10 @@ body.products.reviews, #review-edit-form {
 
         a {
           color: #434343;
+        }
+        
+        .review-count {
+          color: black;
         }
       }
 
