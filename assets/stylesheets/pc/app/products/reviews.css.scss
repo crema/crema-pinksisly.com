@@ -83,7 +83,7 @@ body.products.reviews, #review-edit-form {
         text-overflow: ellipsis;
         vertical-align: middle;
         padding-left: 171px;
-        padding-right: 267px;
+        padding-right: 460px;
 
         a {
           color: #434343;
@@ -91,6 +91,22 @@ body.products.reviews, #review-edit-form {
 
         .review-count {
           color: black;
+        }
+      }
+
+      &.likes {
+        width: 120px;
+        position: absolute;
+        top: 0;
+        right: 285px;
+
+        .like-score-container {
+          margin: 6px 34px 0px 34px;
+          padding: 2px 5px 0 5px;
+
+          .like-score {
+            font-size: 18px;
+          }
         }
       }
 
