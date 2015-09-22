@@ -6,7 +6,7 @@ body.products.reviews, #review-edit-form {
   .product_reviews_summary {
     margin-top: 20px;
   }
-  
+
   .widget {
     &.new-review {
       padding-bottom: 0;
@@ -16,7 +16,7 @@ body.products.reviews, #review-edit-form {
       padding-top: 38px;
     }
   }
-  
+
   .widget-body {
     margin-top: 20px;
   }
@@ -29,7 +29,7 @@ body.products.reviews, #review-edit-form {
     .sort-type {
       color: black;
     }
-    
+
     .review-options-search ul.review_option_types li.review_option_type {
       color: black;
     }
@@ -71,7 +71,7 @@ body.products.reviews, #review-edit-form {
         top: 0;
         left: 95px;
       }
-      
+
       &.photo.list {
         top: 3px;
       }
@@ -88,7 +88,7 @@ body.products.reviews, #review-edit-form {
         a {
           color: #434343;
         }
-        
+
         .review-count {
           color: black;
         }
@@ -150,6 +150,14 @@ body.products.reviews, #review-edit-form {
 
     .expanded .review-content-expanded {
       display: block;
+
+      .comments-container {
+        line-height: 15px;
+      }
+    }
+
+    .review-options .review-option {
+      line-height: 15px;
     }
   }
 
