@@ -2,7 +2,7 @@
 <% content_for :content do %>
   <% if @product && (@brand.review_writable? || !@reviews.empty?) %>
     <% display_write_form = @brand.review_writable? && display_write_form?(@product) %>
-    <div><img src="https://admin.crema.me/custom/pinksisly-com/assets/images/pc/sprites/model_size.png"></div>
+    <div><img src="http://admin.fre.so/custom/pinksisly-com/assets/images/pc/sprites/model_size.png"></div>
     <%= content_tag :div, class: "widget new-review first #{'no-writable' if !@brand.review_writable?}" do %>
       <div class="widget-heading">
         <div class="widget-title">
