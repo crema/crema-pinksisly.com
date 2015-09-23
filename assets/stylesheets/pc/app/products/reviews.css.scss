@@ -105,7 +105,7 @@ body.products.reviews, #review-edit-form {
           padding: 2px 5px 0 5px;
 
           .like-score {
-            font-size: 18px;
+            font-size: 12px;
           }
         }
       }
@@ -619,6 +619,7 @@ ul.reviews.reviews-product {
 .widget-heading .review-options-search {
   width: 26%;
   float: left;
+  font-weight: bold;
 
   .review_option_types {
     left: 0;
