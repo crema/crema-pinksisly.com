@@ -95,7 +95,7 @@ body.products.reviews, #review-edit-form {
       }
 
       &.likes {
-        width: 120px;
+        width: 140px;
         position: absolute;
         top: 0;
         right: 285px;
@@ -108,6 +108,10 @@ body.products.reviews, #review-edit-form {
             font-size: 12px;
           }
         }
+      }
+      
+      &.likes list{
+        width: 120px;
       }
 
       &.author {
