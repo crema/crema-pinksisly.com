@@ -1,0 +1,37 @@
+<%= content_tag :div, class: "widget widget-reviews pagination-list #{'no-data' if product_reviews.total_count == 0}" do %>
+  <div style="margin-bottom: 10px;"><img src="http://admin.fre.so/custom/pinksisly-com/assets/images/pc/sprites/model_size.png"></div>
+  <div class="widget-heading">
+    <% review_option_types = @brand.searchable_options %>
+    <% if !review_option_types.blank? %>
+      <%= render 'reviews/review_options_search', hidden: @review_option_filter.empty?, review_option_types: review_option_types %>
+    <% end %>
+    <div class="sort_type_box">
+      <span class="sort-type selected">
+        <strong><%= ReviewSort.t(@review_sort) %></strong>
+        리뷰 (<%= content_tag :span, number_with_delimiter(product_reviews.total_count), class: 'reviews-count' %>)
+      </span>
+      <% @brand.review_sort_types(ReviewGroupBy::NONE).select{|r| r != @review_sort}.each do |review_sort_type| %>
+      <span class="review-sort-type-column"> | </span><%= link_to ajax_path(order: review_sort_type), remote: true do %><span class="sort-type"><%= ReviewSort.t(review_sort_type) %></span><% end %>
+      <% end %>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <ul class="header">
+    <li>
+      <div class="col index">번호</div>
+      <div class="col photo">사진</div>
+      <div class="col title">제목</div>
+      <div class="col likes">리뷰가 도움이 된 횟수</div>
+      <div class="col author">작성자</div>
+      <div class="col score">평점</div>
+    </li>
+  </ul>
+  <ul class="reviews reviews-product">
+    <%= render partial: 'products/reviews/custom/review', collection: product_reviews, as: :review %>
+  </ul>
+  <div class="no-data-message">리뷰가 없습니다.</div>
+  <div class="widget-footer">
+    <%= paginate product_reviews, params: {review_id: nil}, remote: true, window: kaminari_window(params[:page].to_i, product_reviews.total_pages) %>
+  </div>
+<% end %>
