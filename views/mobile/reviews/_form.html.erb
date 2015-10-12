@@ -92,11 +92,11 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
               default_count: @review.message ? @review.message.gsub(/\s/, '').length : 0) %>
             <div class="limit-counter">0</div>
           </div>
-          <% if !@review.visible_options.empty? %>
+          <% if !@review.options.empty? %>
             <div class="review-option-fields">
               <div class="review-option-fields-title">추가 정보 입력</div>
               <div class="review-option-fields-content">
-                <% @review.visible_options.each do |option| %>
+                <% @review.options.each do |option| %>
                   <%= f.fields_for :options, option do |r| %>
                     <% option_type = option.option_type %>
                     <div class="review-option-field">
