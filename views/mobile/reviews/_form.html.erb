@@ -10,11 +10,6 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
           <div class="call-to-action">배송추적</div>
         </div>
       <% end %>
-      <% if brand.review_enable_not_delivered_sub_orders && not_delivered_sub_orders_count > 0 %>
-        <div class="panel sub-panel panel-link panel-delivery-info">
-          <%= link_to '미배송 상품 확인하기', mobile_my_not_delivered_sub_orders_path %>
-        </div>
-      <% end %>
       <div class="panel sub-panel reward-notice-container panel-reward-info">
         <div class="panel-body">
           <div class="l-contents">
