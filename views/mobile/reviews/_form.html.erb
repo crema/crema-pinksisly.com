@@ -1,0 +1,188 @@
+<%
+input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_supported_url: mobile_errors_file_attach_not_supported_path}
+%>
+<div class="panel">
+  <div class="panel-body container">
+    <% if @sub_order %>
+      <% if @sub_order.delivery_service && @sub_order.invoice && [OrderStatus::PAID, OrderStatus::DELIVERY_STARTED].include?(@sub_order.order_status) %>
+        <div class="panel sub-panel panel-link panel-delivery-info">
+          <%= link_to "여기를 누르시면 배송 상태를 확인하실 수 있습니다!<br>#{DeliveryService.t(@sub_order.delivery_service)} 송장번호 : #{@sub_order.invoice}".html_safe, DeliveryService.link(@sub_order.delivery_service, @sub_order.invoice), target: '_blank' %>
+          <div class="call-to-action">배송추적</div>
+        </div>
+      <% end %>
+      <% if brand.review_enable_not_delivered_sub_orders && not_delivered_sub_orders_count > 0 %>
+        <div class="panel sub-panel panel-link panel-delivery-info">
+          <%= link_to '미배송 상품 확인하기', mobile_my_not_delivered_sub_orders_path %>
+        </div>
+      <% end %>
+      <div class="panel sub-panel reward-notice-container panel-reward-info">
+        <div class="panel-body">
+          <div class="l-contents">
+            <% if @brand.review_reward_notice_short.blank? %>
+              <%= t('reviews.review_reward_short_message', user_name: current_user.name, whole_max_reward: number_with_delimiter(@brand.review_whole_max_reward, delimiter: ','), max_reward: number_with_delimiter(@brand.review_max_reward, delimiter: ','), photo_queen_reward: number_with_delimiter(@brand.give_mileage_to_best_review, delimiter: ',')).html_safe %>
+            <% else %>
+              <%= (@brand.review_reward_notice_short.interpolation_safe % {user_name: current_user.name, whole_max_reward: number_with_delimiter(@brand.review_whole_max_reward, delimiter: ','), max_reward: number_with_delimiter(@brand.review_max_reward, delimiter: ','), photo_queen_reward: number_with_delimiter(@brand.give_mileage_to_best_review, delimiter: ',')}).html_safe %>
+            <% end %>
+          </div>
+          <div class="r-contents">
+            <% if @sub_order && !@brand.review_reward_notice_html.blank? %>
+              <%= content_tag :a, class: 'show-detail' do %>
+                <div class="text-wrap">
+                  <div class="text">자세히</div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% elsif !current_user %>
+      <div class="panel sub-panel reward-notice-container panel-reward-info">
+        <div class="panel-body">
+          <div class="l-contents">
+            <span class="nonmember-review-notice">현재 비회원으로 리뷰작성 중 입니다</span>
+          </div>
+          <div class="r-contents">
+            <%= link_to @brand.review_mall_login_url_mobile, class: "show-detail" do %>
+              <div class="text-wrap">
+                <div class="text">로그인</div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <%= render @review.product, set_product_link_type: :product_review_list %>
+    <%= form_for [:mobile, @review],
+        html: {
+          multipart: true,
+          autocomplete: 'off',
+          class: 'form-review'
+        },
+        remote: browser.supports_remotipart?,
+        validate: true,
+        data: {
+          review_message_default: @brand.review_message_default,
+          already_posted: @review.new_record? && @review.product.already_posted?(current_user),
+          already_posted_return_url: app ? pending_mobile_reviews_url : nil,
+          alert_requirement: @brand.review_alert_mileage_requirement_before_submit,
+          disable_save_requirement: @brand.disable_review_with_insufficient_review_length
+        } do |f| %>
+      <% if !current_user %>
+        <div class="panel sub-panel nonmember-review-info clearfix">
+          <div class="lfloat field">
+            <div class="key">이름</div>
+            <%= f.text_field :user_name, validate: {presence: true}, placeholder: '이름 입력' %>
+          </div>
+          <div class="rfloat field">
+            <div class="key"> 비밀번호</div>
+            <%= f.password_field :password, validate: {presence: true}, placeholder: '비밀번호 입력' %>
+          </div>
+        </div>
+      <% end %>
+      <div class="panel sub-panel inputs-container">
+        <div class="panel-body">
+          <div class="message limit-count-container">
+            <%= f.text_area(
+              :message,
+              class: 'count-limit',
+              validate: {presence: true},
+              default_value: @review.message,
+              placeholder: (@brand.review_message_placeholder if @brand.review_default_message_type == ReviewDefaultMessageType::PLACEHOLDER),
+              maxlength: Settings.max_review_length,
+              rows: 8,
+              data: {
+                up_counter: true,
+                minimum_message_length: @brand.min_review_length_to_get_mileage
+              },
+              default_count: @review.message ? @review.message.gsub(/\s/, '').length : 0) %>
+            <div class="limit-counter">0</div>
+          </div>
+          <% if !@review.visible_options.empty? %>
+            <div class="review-option-fields">
+              <div class="review-option-fields-title">추가 정보 입력</div>
+              <div class="review-option-fields-content">
+                <% @review.visible_options.each do |option| %>
+                  <%= f.fields_for :options, option do |r| %>
+                    <% option_type = option.option_type %>
+                    <div class="review-option-field">
+                      <%= r.hidden_field :review_option_type_id %>
+                      <a class="link-edit-review-option-field static">
+                        <div class="review-option-field-title"><%= option_type.name %> <%= '*' if option_type.required %></div>
+                        <div class="review-option-field-content">
+                          <span class="value"><%= option.value || '-' %></span>
+                          <%= option_type.unit if option_type.field_type == ReviewOptionFieldType::NUMBER %>
+                        </div>
+                        <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                      </a>
+                      <div class="dynamic">
+                        <% case option_type.field_type %>
+                        <% when ReviewOptionFieldType::NUMBER %>
+                          <%= r.text_field :value, class: "review-option-field-value number-only #{'required' if option_type.required}", data: {message: option_type.validate_message} %>
+                          <div class="option-unit"><%= option_type.unit if !option_type.unit.blank? %></div>
+                        <% when ReviewOptionFieldType::SELECT %>
+                          <% if option.options %>
+                            <%= r.select :value, option_type.option_values.split(',').collect {|o| [o, o]}, {include_blank: "-#{option_type.name} 선택-"}, class: "review-option-field-value select2 #{'required' if option_type.required}", data: {message: option_type.validate_message} %>
+                          <% else %>
+                            <%= r.text_field :value, class: "review-option-field-value #{'required' if option_type.required}", data: {message: option_type.validate_message} %>
+                          <% end %>
+                        <% else %>
+                          <%= r.text_field :value, class: "review-option-field-value #{'required' if option_type.required}", data: {message: option_type.validate_message} %>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+          <div class="field-box score-container">
+            <%= f.select :score, ReviewScore.values.collect {|score| [ReviewScore.t(score), score]}, {}, {dir: 'rtl', class: 'select-rating'} %>
+          </div>
+          <div class="review-input-photos">
+            <div class="input-button review-photos">
+              <%= content_tag :ul, class: 'image-fields-container', data: {max_images_count: 4, images_count: @review.images_count}  do %>
+                <% (0...@review.images_count).each do |i| %>
+                  <%= render 'common/reviews/image_field', f: f, input_image_args: input_image_args, image_position: i + 1, review: @review %>
+                <% end %>
+                <%= render 'common/reviews/image_field', f: f, input_image_args: input_image_args, image_position: @review.images_count + 1, review: @review if @review.images_count < 4 %>
+              <% end %>
+              <%= f.hidden_field :product_id %>
+              <%= f.hidden_field :sub_order_id %>
+              <%= f.hidden_field :review_source %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%= link_to 'http://www.pinksisly.com/m/page.html?id=3', class: 'pinksisly_com_mobile_selfie', target: '_blank' do %>
+        <div class="pinksisly_com_mobile_selfie__button">
+          셀카 이쁘게 찍 TIP▶
+        </div>
+        <%= image_tag manual_asset_url('custom/pinksisly-com/mobile_selfie.png'), class: 'pinksisly_com_mobile_selfie__image' %>
+      <% end %>
+      <div class="review-submit-container">
+        <%= f.submit '저 장', class: 'btn btn-block review-submit-button', data: {disable_with: "저장 중..."}, disabled: @preview %>
+      </div>
+      <script type="text/x-jquery-tmpl" class="new-image-field">
+        <%= render('common/reviews/image_field', f: f, template: true, review: @review) %>
+      </script>
+    <% end %>
+    <%= render 'common/shared/form_upload_image' %>
+  </div>
+</div>
+<% if @brand.review_reward_notice_html.present? %>
+  <script type="text/x-jquery-tmpl" id="review_info_tmpl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h5 class="modal-title"><%= "#{brand_name} 적립금 공지" %></h4>
+        </div>
+        <div class="modal-body">
+          <p><%= @brand.review_reward_notice_html %></p>
+        </div>
+        <div class="modal-footer">
+          <%= content_tag :button, '확인', type: "button", class: "btn-default btn-primary btn-lg", data: {dismiss: "modal"} %>
+        </div>
+      </div>
+    </div>
+  </script>
+<% end %>

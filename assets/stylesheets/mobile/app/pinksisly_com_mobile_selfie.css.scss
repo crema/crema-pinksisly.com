@@ -1,0 +1,26 @@
+@import "../lib/common";
+
+.pinksisly_com_mobile_selfie {
+  display: block;
+  position: relative;
+  height: 51px;
+  margin: 0 4px 5px 4px;
+}
+
+.pinksisly_com_mobile_selfie__button {
+  color: white;
+  background-color: #f17e81;
+  margin-right: 198px;
+  height: 100%;
+  line-height: 51px;
+  text-align: center;
+  border: 1px solid #e1e1e1
+}
+
+.pinksisly_com_mobile_selfie__image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 193px;
+  height: 51px;
+}
