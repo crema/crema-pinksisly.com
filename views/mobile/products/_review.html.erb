@@ -25,7 +25,7 @@
         <div class="title">리뷰</div>
         <div class="value"><%= reviews.count %></div>
       </div>
-      <% if @brand.review_show_score_summary %>
+      <% if widget.show_product_score? %>
         <div class="content">
           <div class="title">평점</div>
           <% average_score = product.score %>
