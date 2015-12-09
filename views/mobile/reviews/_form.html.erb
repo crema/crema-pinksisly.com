@@ -1,5 +1,12 @@
 <%
-input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_supported_url: mobile_errors_file_attach_not_supported_path}
+if browser.show_naver_app_file_attach_guide?
+  input_image_args = {
+    file_attach_not_supported_url: mobile_errors_file_attach_not_supported_path,
+    file_attach_not_supported_confirm: t('reviews.form.file_attach_not_supported_confirm')
+  }
+else
+  input_image_args = nil
+end
 %>
 <div class="panel">
   <div class="panel-body container">
