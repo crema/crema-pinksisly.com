@@ -138,7 +138,7 @@ end
             </div>
           <% end %>
           <div class="field-box score-container">
-            <%= f.select :score, ReviewScore.values.collect {|score| [ReviewScore.t(score), score]}, {}, {dir: 'rtl', class: 'select-rating'} %>
+            <%= f.select :score, ReviewScore.values.collect {|score| [ReviewScore.t(score), score]}, {}, {dir: 'rtl', class: 'select-rating', data: {label: t('reviews.form.select_star')}} %>
           </div>
           <div class="review-input-photos">
             <div class="input-button review-photos">
