@@ -9,9 +9,6 @@
         <%= render @product, review_source: WrittenSource::BRAND_MOBILE_PRODUCT_REVIEWS %>
       </div>
       <div><a href="<%= @product.url%>"><div class="panel-product-button">제품 보러가기</div></a></div>
-      <div class="action-container">
-        <%= link_to '리뷰쓰기11111', new_mobile_review_path(product_id: product.id, review_source: review_source), remote: true, data: {login_required: @brand.review_allowed_author_type != ReviewAllowedAuthorType::EVERYONE} %>
-      </div>
       <div class="panel-body">
         <% if @reviews.empty? %>
           <ul class="reviews"><%= t('reviews.no_reviews') %></ul>
