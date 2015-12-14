@@ -38,20 +38,6 @@
     <% else %>
       <%= link_to review_block, reviews_mobile_products_path(product_id: product.id), remote: true, class: 'link-review' %>
     <% end %>
-    <% if set_product_link_type == :mall_product %>
-      <div class="action-container">
-        <i class="fa fa-angle-right"></i>
-      </div>
-    <% elsif set_product_link_type == :product_review_list %>
-    <% elsif local_assigns[:editable_review] %>
-      <div class="action-container">
-        <%= link_to '리뷰수정', edit_mobile_review_path(local_assigns[:editable_review]), remote: true %>
-      </div>
-    <% elsif display_write_form?(product) %>
-      <div class="action-container">
-        <%= link_to '리뷰쓰기', new_mobile_review_path(product_id: product.id, review_source: review_source), remote: true, data: {login_required: @brand.review_allowed_author_type != ReviewAllowedAuthorType::EVERYONE} %>
-      </div>
-    <% end %>
   </div>
   <% if set_product_link_type == :mall_product %>
     <%= content_tag :a, nil, data: {product_reviews_url: reviews_mobile_products_url(product_code: product.code)}, class: 'link-product' %>

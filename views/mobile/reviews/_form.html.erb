@@ -1,13 +1,20 @@
 <%
-input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_supported_url: mobile_errors_file_attach_not_supported_path}
+if browser.show_naver_app_file_attach_guide?
+  input_image_args = {
+    file_attach_not_supported_url: mobile_errors_file_attach_not_supported_path,
+    file_attach_not_supported_confirm: t('reviews.form.file_attach_not_supported_confirm')
+  }
+else
+  input_image_args = nil
+end
 %>
 <div class="panel">
   <div class="panel-body container">
     <% if @sub_order %>
       <% if @sub_order.delivery_service && @sub_order.invoice && [OrderStatus::PAID, OrderStatus::DELIVERY_STARTED].include?(@sub_order.order_status) %>
         <div class="panel sub-panel panel-link panel-delivery-info">
-          <%= link_to "여기를 누르시면 배송 상태를 확인하실 수 있습니다!<br>#{DeliveryService.t(@sub_order.delivery_service)} 송장번호 : #{@sub_order.invoice}".html_safe, DeliveryService.link(@sub_order.delivery_service, @sub_order.invoice), target: '_blank' %>
-          <div class="call-to-action">배송추적</div>
+          <%= link_to "#{t('reviews.forms.can_check_delivery_state')}<br>#{DeliveryService.t(@sub_order.delivery_service)} #{t('reviews.forms.invoice_number')} : #{@sub_order.invoice}".html_safe, DeliveryService.link(@sub_order.delivery_service, @sub_order.invoice), target: '_blank' %>
+          <div class="call-to-action"><%= t('reviews.forms.delivery_track') %></div>
         </div>
       <% end %>
       <div class="panel sub-panel reward-notice-container panel-reward-info">
@@ -23,7 +30,7 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
             <% if @sub_order && !@brand.review_reward_notice_html.blank? %>
               <%= content_tag :a, class: 'show-detail' do %>
                 <div class="text-wrap">
-                  <div class="text">자세히</div>
+                  <div class="text"><%= t('reviews.forms.detail') %></div>
                 </div>
               <% end %>
             <% end %>
@@ -34,12 +41,12 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
       <div class="panel sub-panel reward-notice-container panel-reward-info">
         <div class="panel-body">
           <div class="l-contents">
-            <span class="nonmember-review-notice">현재 비회원으로 리뷰작성 중 입니다</span>
+            <span class="nonmember-review-notice"><%= t('reviews.forms.notify_writing_as_nonmember') %></span>
           </div>
           <div class="r-contents">
             <%= link_to @brand.review_mall_login_url_mobile, class: "show-detail" do %>
               <div class="text-wrap">
-                <div class="text">로그인</div>
+                <div class="text"><%= t('reviews.forms.label_login') %></div>
               </div>
             <% end %>
           </div>
@@ -57,7 +64,7 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
         validate: true,
         data: {
           review_message_default: @brand.review_message_default,
-          already_posted: @review.new_record? && @review.product.already_posted?(current_user),
+          already_posted: @review.new_record? && @review.product.already_posted?(current_user) ? t('reviews.form.already_posted') : nil,
           already_posted_return_url: app ? pending_mobile_reviews_url : nil,
           alert_requirement: @brand.review_alert_mileage_requirement_before_submit,
           disable_save_requirement: @brand.disable_review_with_insufficient_review_length
@@ -65,12 +72,12 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
       <% if !current_user %>
         <div class="panel sub-panel nonmember-review-info clearfix">
           <div class="lfloat field">
-            <div class="key">이름</div>
-            <%= f.text_field :user_name, validate: {presence: true}, placeholder: '이름 입력' %>
+            <div class="key"><%= t('reviews.forms.label_name') %></div>
+            <%= f.text_field :user_name, validate: {presence: true}, placeholder: t('reviews.forms.input_name'), data: {presence_warning: t('reviews.attributes.user_name.presence')} %>
           </div>
           <div class="rfloat field">
-            <div class="key"> 비밀번호</div>
-            <%= f.password_field :password, validate: {presence: true}, placeholder: '비밀번호 입력' %>
+            <div class="key"> <%= t('reviews.forms.label_password') %></div>
+            <%= f.password_field :password, validate: {presence: true}, placeholder: t('reviews.forms.input_password'), data: {presence_warning: t('reviews.attributes.password.presence')} %>
           </div>
         </div>
       <% end %>
@@ -87,14 +94,16 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
               rows: 8,
               data: {
                 up_counter: true,
-                minimum_message_length: @brand.min_review_length_to_get_mileage
+                minimum_message_length: @brand.min_review_length_to_get_mileage,
+                minimum_message_length_warning: t('reviews.form.minimum_message_length_warning', length: @brand.min_review_length_to_get_mileage),
+                minimum_message_length_error: t('reviews.form.minimum_message_length_error', length: @brand.min_review_length_to_get_mileage)
               },
               default_count: @review.message ? @review.message.gsub(/\s/, '').length : 0) %>
             <div class="limit-counter">0</div>
           </div>
           <% if !@review.options.empty? %>
             <div class="review-option-fields">
-              <div class="review-option-fields-title">추가 정보 입력</div>
+              <div class="review-option-fields-title"><%= t('reviews.forms.input_detail_info') %></div>
               <div class="review-option-fields-content">
                 <% @review.options.each do |option| %>
                   <%= f.fields_for :options, option do |r| %>
@@ -116,7 +125,7 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
                           <div class="option-unit"><%= option_type.unit if !option_type.unit.blank? %></div>
                         <% when ReviewOptionFieldType::SELECT %>
                           <% if option.options %>
-                            <%= r.select :value, option_type.option_values.split(',').collect {|o| [o, o]}, {include_blank: "-#{option_type.name} 선택-"}, class: "review-option-field-value select2 #{'required' if option_type.required}", data: {message: option_type.validate_message} %>
+                            <%= r.select :value, option_type.option_values.split(',').collect {|o| [o, o]}, {include_blank: t('reviews.forms.option_select', option_name:option_type.name)}, class: "review-option-field-value select2 #{'required' if option_type.required}", data: {message: option_type.validate_message} %>
                           <% else %>
                             <%= r.text_field :value, class: "review-option-field-value #{'required' if option_type.required}", data: {message: option_type.validate_message} %>
                           <% end %>
@@ -131,7 +140,7 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
             </div>
           <% end %>
           <div class="field-box score-container">
-            <%= f.select :score, ReviewScore.values.collect {|score| [ReviewScore.t(score), score]}, {}, {dir: 'rtl', class: 'select-rating'} %>
+            <%= f.select :score, ReviewScore.values.collect {|score| [ReviewScore.t(score), score]}, {}, {dir: 'rtl', class: 'select-rating', data: {label: t('reviews.form.select_star')}} %>
           </div>
           <div class="review-input-photos">
             <div class="input-button review-photos">
@@ -149,7 +158,7 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
         </div>
       </div>
       <div class="review-submit-container">
-        <%= f.submit '저 장', class: 'btn btn-block review-submit-button', data: {disable_with: "저장 중..."}, disabled: @preview %>
+        <%= f.submit t('reviews.forms.label_save'), class: 'btn btn-block review-submit-button', data: {disable_with: t('reviews.forms.label_saving')}, disabled: @preview %>
       </div>
       <script type="text/x-jquery-tmpl" class="new-image-field">
         <%= render('common/reviews/image_field', f: f, template: true, review: @review) %>
@@ -163,13 +172,13 @@ input_image_args = browser.supports_file_attach? ? nil : {file_attach_not_suppor
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h5 class="modal-title"><%= "#{brand_name} 적립금 공지" %></h4>
+          <h5 class="modal-title"><%= "#{brand_name} t('reviews.forms.mileage_notice')" %></h4>
         </div>
         <div class="modal-body">
           <p><%= @brand.review_reward_notice_html %></p>
         </div>
         <div class="modal-footer">
-          <%= content_tag :button, '확인', type: "button", class: "btn-default btn-primary btn-lg", data: {dismiss: "modal"} %>
+          <%= content_tag :button, t('generals.label_confirm'), type: "button", class: "btn-default btn-primary btn-lg", data: {dismiss: "modal"} %>
         </div>
       </div>
     </div>
