@@ -3,12 +3,22 @@
   <%= render 'topbar/topbar', hide_sort_type: false %>
 <% end %>
 <% content_for :content do %>
+  <% review_source = WrittenSource::BRAND_MOBILE_PRODUCT_REVIEWS %>
   <% if @product %>
     <%= content_tag :div, class: "panel panel-reviews #{'no-data' if @reviews.total_count == 0}" do %>
       <div class="panel-heading">
-        <%= render @product, review_source: WrittenSource::BRAND_MOBILE_PRODUCT_REVIEWS %>
+        <%= render @product, review_source: review_source %>
+        <div class="clearfix">
+          <div class="product_button_area">
+            <a href="<%= @product.url%>"><div class="product_button_area__button">제품 보러가기</div></a>
+          </div>
+          <div class="product_button_area">
+            <%= link_to new_mobile_review_path(product_id: @product.id, review_source: review_source), remote: true, data: {login_required: @brand.review_allowed_author_type != ReviewAllowedAuthorType::EVERYONE} do %>
+              <div class="product_button_area__button product_button_area__button--review">리뷰 쓰기</div>
+            <% end %>
+          </div>
+        </div>
       </div>
-      <div><a href="<%= @product.url%>"><div class="panel-product-button">제품 보러가기</div></a></div>
       <div class="panel-body">
         <% if @reviews.empty? %>
           <ul class="reviews"><%= t('reviews.no_reviews') %></ul>
