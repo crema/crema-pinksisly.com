@@ -14,26 +14,3 @@ body.products.reviews {
     margin-top: -5px;
   }
 }
-
-.product_button_area {
-  display: inline-block;
-  width: 50%;
-  float: left;
-}
-
-.product_button_area__button {
-  width: 60%;
-  padding: 15px;
-  background: rgba(0,0,0,0.85);
-  color: #fff;
-  text-align: center;
-  float: right;
-  margin: 2px 10px 6px 0;
-}
-
-.product_button_area__button--review {
-  float: left;
-  margin-left: 10px;
-  background: rgb(250,82,178);
-  color: #fff;
-}
