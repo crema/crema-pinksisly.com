@@ -44,7 +44,7 @@ end
             <span class="nonmember-review-notice"><%= t('reviews.forms.notify_writing_as_nonmember') %></span>
           </div>
           <div class="r-contents">
-            <a class="link-login">
+            <a class="show-detail">
               <div class="text-wrap">
                 <div class="text"><%= t('reviews.forms.label_login') %></div>
               </div>
@@ -172,7 +172,7 @@ end
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h5 class="modal-title"><%= "#{brand_name} t('reviews.forms.mileage_notice')" %></h4>
+          <h5 class="modal-title"><%= "#{brand_name} #{t('reviews.forms.mileage_notice')}" %></h4>
         </div>
         <div class="modal-body">
           <p><%= @brand.review_reward_notice_html %></p>
