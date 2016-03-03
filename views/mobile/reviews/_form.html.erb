@@ -73,11 +73,11 @@ end
         <div class="panel sub-panel review_guest_info clearfix">
           <div class="lfloat field">
             <div class="key"><%= t('reviews.forms.label_name') %></div>
-            <%= f.text_field :user_name, validate: {presence: true}, placeholder: t('reviews.forms.input_name'), data: {presence_warning: t('reviews.attributes.user_name.presence')} %>
+            <%= f.text_field :user_name, validate: {presence: true}, placeholder: t('reviews.forms.input_name'), class: 'review_guest_info__input review_guest_info__input--name', data: {presence_warning: t('reviews.attributes.user_name.presence')} %>
           </div>
           <div class="rfloat field">
             <div class="key"> <%= t('reviews.forms.label_password') %></div>
-            <%= f.password_field :password, validate: {presence: true}, placeholder: t('reviews.forms.input_password'), data: {presence_warning: t('reviews.attributes.password.presence')} %>
+            <%= f.password_field :password, validate: {presence: true}, placeholder: t('reviews.forms.input_password'), class: 'review_guest_info__input review_guest_info__input--password', data: {presence_warning: t('reviews.attributes.password.presence')} %>
           </div>
         </div>
       <% end %>
