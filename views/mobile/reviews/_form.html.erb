@@ -44,11 +44,11 @@ end
             <span class="nonmember-review-notice"><%= t('reviews.forms.notify_writing_as_nonmember') %></span>
           </div>
           <div class="r-contents">
-            <%= link_to "http://www.pinksisly.com/m/page.html?id=4&action=login&next_url=#{request.url}", class: "show-detail" do %>
+            <a class="link-login">
               <div class="text-wrap">
                 <div class="text"><%= t('reviews.forms.label_login') %></div>
               </div>
-            <% end %>
+            </a>
           </div>
         </div>
       </div>
@@ -70,14 +70,14 @@ end
           disable_save_requirement: @brand.disable_review_with_insufficient_review_length
         } do |f| %>
       <% if !current_user %>
-        <div class="panel sub-panel nonmember-review-info clearfix">
+        <div class="panel sub-panel review_guest_info clearfix">
           <div class="lfloat field">
             <div class="key"><%= t('reviews.forms.label_name') %></div>
-            <%= f.text_field :user_name, validate: {presence: true}, placeholder: t('reviews.forms.input_name'), data: {presence_warning: t('reviews.attributes.user_name.presence')} %>
+            <%= f.text_field :user_name, validate: {presence: true}, placeholder: t('reviews.forms.input_name'), class: 'review_guest_info__input review_guest_info__input--name', data: {presence_warning: t('reviews.attributes.user_name.presence')} %>
           </div>
           <div class="rfloat field">
             <div class="key"> <%= t('reviews.forms.label_password') %></div>
-            <%= f.password_field :password, validate: {presence: true}, placeholder: t('reviews.forms.input_password'), data: {presence_warning: t('reviews.attributes.password.presence')} %>
+            <%= f.password_field :password, validate: {presence: true}, placeholder: t('reviews.forms.input_password'), class: 'review_guest_info__input review_guest_info__input--password', data: {presence_warning: t('reviews.attributes.password.presence')} %>
           </div>
         </div>
       <% end %>
@@ -172,7 +172,7 @@ end
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h5 class="modal-title"><%= "#{brand_name} t('reviews.forms.mileage_notice')" %></h4>
+          <h5 class="modal-title"><%= "#{brand_name} #{t('reviews.forms.mileage_notice')}" %></h4>
         </div>
         <div class="modal-body">
           <p><%= @brand.review_reward_notice_html %></p>
