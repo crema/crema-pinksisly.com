@@ -3,7 +3,7 @@
     remote: true, validate: true,
     data: {
       review_message_default: @brand.review_message_default,
-      already_posted: @already_posted,
+      already_posted: @already_posted ? t('reviews.form.already_posted') : nil,
       alert_requirement: @brand.review_alert_mileage_requirement_before_submit,
       disable_save_requirement: @brand.disable_review_with_insufficient_review_length
     } do |f| %>
