@@ -1,5 +1,5 @@
 <%= content_tag :div, class: "widget widget-reviews pagination-list #{'no-data' if product_reviews.total_count == 0}" do %>
-  <div style="margin-bottom: 10px;"><img src="http://pinksisly.img9.kr/d4/images/Q&A-size.jpg"></div>
+  <div style="margin-bottom: 10px; text-align: center;"><img src="http://pinksisly.img9.kr/d4/images/Q&A-size.jpg"></div>
   <div class="widget-heading">
     <% review_option_types = @brand.searchable_options %>
     <% if !review_option_types.blank? %>
