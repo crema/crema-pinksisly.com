@@ -620,20 +620,31 @@ ul.reviews.reviews-product {
 
 .widget-heading .sort_type_box {
   float: right;
+  margin-top: 100px;
+  margin-bottom: 20px;
 }
 .widget-heading .review-options-search {
-  width: 26%;
+  width: 50%;
   float: left;
   font-weight: bold;
 
   .review_option_types {
     left: 0;
     margin-left: -25px;
+    
+    li.review_option_type {
+      margin-left: 40px;
+    }
 
     .dialog-iframe-height {
       left: 0 !important;
       min-width: 128px;
     }
   }
+}
+
+span.type-name {
+  font-size: 24px;
+  padding-right: 40px;
 }
 
