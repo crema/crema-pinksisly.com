@@ -624,7 +624,7 @@ ul.reviews.reviews-product {
   margin-bottom: 20px;
 }
 .widget-heading .review-options-search {
-  width: 42%;
+  width: 50%;
   float: left;
   font-weight: bold;
   left: 31%;
@@ -633,15 +633,15 @@ ul.reviews.reviews-product {
   .review_option_types {
     left: 0;
     margin-left: -25px;
+    width: 150px;
     
     li.review_option_type {
-      margin-left: 40px;
+      margin-left: 30px;
     }
 
     .dialog-iframe-height {
       left: 0 !important;
       min-width: 128px;
-      width: 135px;
     }
   }
 }
@@ -653,4 +653,8 @@ span.type-name {
 
 .review-options-search .dropdown-menu {
   top: 34px;
+}
+
+ul.review_option_types {
+  margin-top: 10px;
 }
