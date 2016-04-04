@@ -1,0 +1,9 @@
+<ul class="review_option_search_values">
+  <% option_type.search_options.each_with_index do |option, i| %>
+    <li class="review_option_search_value">
+      <% id = "review_option_type_#{option_type.id}_#{i}" %>
+      <%= check_box_tag "review_option_type_#{option_type.id}", option[1], @review_option_filter.selected?(option_type.id, option[1]), class: 'checkbox-review-option-search', id: id %>
+      <%= label_tag id, option[0] %>
+    </li>
+  <% end %>
+</ul>
