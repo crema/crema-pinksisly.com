@@ -627,8 +627,9 @@ ul.reviews.reviews-product {
   width: 50%;
   float: left;
   font-weight: bold;
-  left: 26.5%;
+  left: 24.5%;
   margin-top: 10px;
+  top: 2px;
 
   .review_option_types {
     left: 0;
@@ -636,7 +637,7 @@ ul.reviews.reviews-product {
     
     li.review_option_type {
       margin-left: 30px;
-      width: 150px;
+      width: 165px;
     }
 
     .dialog-iframe-height {
