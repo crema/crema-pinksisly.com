@@ -3,7 +3,7 @@
   <div class="widget-heading">
     <% review_option_types = @brand.searchable_options %>
     <% if !review_option_types.blank? %>
-      <%= render 'product/reviews/review_options_search', hidden: @review_option_filter.empty?, review_option_types: review_option_types %>
+      <%= render 'products/reviews/review_options_search', hidden: @review_option_filter.empty?, review_option_types: review_option_types %>
     <% end %>
     <div class="sort_type_box">
       <span class="sort-type selected">

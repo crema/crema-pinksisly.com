@@ -1,0 +1,7 @@
+<%= content_tag :div, class: 'review-options-search' do %>
+  <ul class="review_option_types">
+    <% review_option_types.each_with_index do |option_type, index| %>
+      <%= render 'products/reviews/option_types/option_type', option_type: option_type, option_type_counter: index, review_option_types_count: review_option_types.count %>
+    <% end %>
+  </ul>
+<% end %>
