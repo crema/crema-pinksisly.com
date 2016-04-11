@@ -29,7 +29,7 @@
         <div class="content">
           <div class="title">평점</div>
           <% average_score = product.score %>
-          <div class="value"><%= average_score >= 10.0 ? 10 : average_score || '-' %></div>
+          <div class="value"><%= product.display_score('-') %></div>
         </div>
       <% end %>
     <% end %>
