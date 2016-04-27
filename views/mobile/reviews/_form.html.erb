@@ -20,10 +20,19 @@ end
       <div class="panel sub-panel reward-notice-container panel-reward-info">
         <div class="panel-body">
           <div class="l-contents">
-            <% if @brand.review_reward_notice_short.blank? %>
-              <%= t('reviews.review_reward_short_message', user_name: current_user.name, whole_max_reward: number_with_delimiter(@brand.review_whole_max_reward, delimiter: ','), max_reward: number_with_delimiter(@brand.review_max_reward, delimiter: ','), photo_queen_reward: number_with_delimiter(@brand.give_mileage_to_best_review, delimiter: ',')).html_safe %>
+            <%
+              args = {
+                user_name: current_user.name,
+                max_best_mileage: number_with_delimiter(@brand.max_basic_mileage_for_text_review + @brand.give_mileage_to_best_review),
+                max_mileage: number_with_delimiter(@brand.max_basic_mileage_for_text_review),
+                photo_queen_reward: number_with_delimiter(@brand.give_mileage_to_best_review)
+              }
+              message = @brand.review_reward_notice_short
+            %>
+            <% if message.blank? %>
+              <%= t('reviews.review_reward_short_message', args).html_safe %>
             <% else %>
-              <%= (@brand.review_reward_notice_short.interpolation_safe % {user_name: current_user.name, whole_max_reward: number_with_delimiter(@brand.review_whole_max_reward, delimiter: ','), max_reward: number_with_delimiter(@brand.review_max_reward, delimiter: ','), photo_queen_reward: number_with_delimiter(@brand.give_mileage_to_best_review, delimiter: ',')}).html_safe %>
+              <%= (message.interpolation_safe % args).html_safe %>
             <% end %>
           </div>
           <div class="r-contents">
