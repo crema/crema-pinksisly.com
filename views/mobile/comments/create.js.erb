@@ -1,0 +1,14 @@
+var $comment = $("#comment_<%= @tracking_id %>");
+<% if @comment.errors.empty? %>
+  if($comment.length > 0){
+    $comment.after("<%=j render @comment, formats: :html %>").remove();
+    $comment.closest(".review-content").find(".comments-count").text("<%= @comments_count %>");
+  } else {
+    var $review = $("#review_<%= @comment.review_id %>");
+    $review.find(".comments-count .count").text("<%= @comments_count %>");
+    alert("댓글이 등록되었습니다.");
+  }
+<% else %>
+  $comment.remove();
+  alert("<%= @comment.errors.messages[:message].first %>");
+<% end %>

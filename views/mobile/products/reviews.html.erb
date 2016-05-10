@@ -8,23 +8,21 @@
     <%= content_tag :div, class: "panel panel-reviews #{'no-data' if @reviews.total_count == 0}" do %>
       <div class="panel-heading">
         <%= render @product, review_source: review_source %>
-        <div class="clearfix">
-          <div class="product_button_area">
-            <a href="<%= @product.url%>"><div class="product_button_area__button">제품 보러가기</div></a>
-          </div>
-          <div class="product_button_area">
-            <%= link_to new_mobile_review_path(product_id: @product.id, review_source: review_source), remote: true, data: {login_required: @brand.review_allowed_author_type != ReviewAllowedAuthorType::EVERYONE} do %>
-              <div class="product_button_area__button product_button_area__button--review">리뷰 쓰기</div>
+        <div class="sort_types">
+          <% review_sort_types.each_with_index do |review_sort_type, i| %>
+            <%= content_tag :div, class: "sort_types__sort_type #{'sort_types__sort_type--selected' if review_sort_type == @review_sort} #{'sort_types__sort_type--last' if i == (review_sort_types.count - 1)}" do %>
+              <%= link_to ajax_path(order: review_sort_type, aloading: '.page'), remote: true do %><span class="sort-type"><%= ReviewSort.t(review_sort_type) %></span><% end %>
             <% end %>
-          </div>
+          <% end %>
         </div>
+        <%= render 'products/reviews/summary/thumbnail' %>
       </div>
       <div class="panel-body">
         <% if @reviews.empty? %>
           <ul class="reviews"><%= t('reviews.no_reviews') %></ul>
         <% else %>
           <ul class="reviews">
-            <%= render partial: 'reviews/review', collection: @reviews, as: 'review', locals: {hide_image: true, external_link: false} %>
+            <%= render partial: 'products/reviews/review', collection: @reviews, as: 'review', locals: {hide_image: true, external_link: false} %>
           </ul>
         <% end %>
       </div>

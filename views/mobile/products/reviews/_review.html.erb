@@ -1,0 +1,133 @@
+<%
+user_grade_icon_url = review.user_grade_icon_url
+display_user_grade = @brand.review_author_display_type == ReviewAuthorDisplayType::USER_GRADE && @brand.brand_user_grade_display_type_in_reviews_index != BrandUserGradeDisplayType::NONE
+display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grade_display_type_in_reviews_index == BrandUserGradeDisplayType::TEXT_WITH_ICON
+%>
+<%= content_tag_for :li, review do %>
+  <div class="review-inner">
+    <%= content_tag :div, class: 'panel panel-review' do %>
+      <div class="panel-body no-border">
+        <div class="star-wrap">
+          <% if @brand.review_show_score %>
+            <%= render 'reviews/star_rating', score: review.score %>
+          <% end %>
+        </div>
+        <%= content_tag :div, class: "name brand-user-grade-display-type-#{@brand.brand_user_grade_display_type_in_reviews_index}#{' without-date' if !@brand.review_show_created_at}" do %>
+          <%= review_user_display_name(review) %>
+          <% if review.brand_user_grade_name && display_user_grade %>
+            <span>
+              &nbsp;
+              [ <% if display_user_grade_icon %>
+                <%= image_tag user_grade_icon_url, class: 'user-grade-icon' %>
+              <% end %>
+              <%= review.brand_user_grade_name %> ]
+            </span>
+          <% end %>
+        <% end %>
+        <% if @brand.review_show_created_at %>
+          <div class="date"><%= review.created_at.strftime('%Y.%m.%d') %></div>
+        <% end %>
+        <%= content_tag :div, class: 'action-info action-info--top' do %>
+          <span class="comments-count">
+            <i class="fa fa-comment"></i>
+            <span class="count"><%= review.comments_count %></span>
+          </span>
+          <span class="likes-count">
+            <i class="fa fa-heart"></i>
+            <span class="count"><%= review.total_score %></span>
+          </span>
+        <% end %>
+        <%
+        link_review_args = {
+          class: 'link-cover link-review'
+        }
+        link_review_params = {}
+        if iframe? && browser.supports_new_tab?
+          link_review_args[:target] = '_blank'
+          link_review_params[:new_tab] = 1
+        else
+          link_review_args[:"data-link-target"] = 'window'
+          link_review_args[:remote] = true
+        end
+        %>
+        <%= link_to mobile_review_path(review.id, link_review_params), link_review_args do %>
+          <div class="message">
+            <% case @brand.review_author_display_type %>
+            <% when ReviewAuthorDisplayType::AUTHOR_TYPE %>
+              <% if review.brand_author_type %>
+                <div>[<%= review.brand_author_type.title %>]</div>
+              <% elsif review.pinned_to_top? %>
+                <div><%= t('reviews.best_review') %></div>
+              <% end %>
+            <% when ReviewAuthorDisplayType::USER_GRADE %>
+              <% if review.pinned_to_top? %>
+                <div><%= t('reviews.best_review') %></div>
+              <% end %>
+            <% end %>
+            <% if widget.review_message_all_collapsed? %>
+              <% show_see_more = true %>
+              <%= widget.collapsed_title %>
+            <% else %>
+              <%
+              show_see_more = !widget.show_image_when_collapsed && review.images_count > 0
+              max_images_count = 5
+              %>
+              <% review.message_with_prefix.limit(max_bytes_per_line: Settings.max_review_chars_per_line_for_mobile).lines.each_with_index do |line, i| %>
+                <%=raw "<br>" if i != 0 && i != max_images_count - 1 %>
+                <% if i == max_images_count - 1 %>
+                  <% show_see_more = true %>
+                  <% break %>
+                <% else %>
+                  <%= i == (max_images_count - 2) ? line[0..25].html_safe : line.html_safe %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <%= content_tag(:span, t('reviews.see_more'), class: 'see-more') if show_see_more %>
+          </div>
+        <% end %>
+        <% if review.images_count > 0 %>
+          <div class="review_image">
+            <%= link_to photo_review_popup_mobile_review_path(review, photo_index: 1), target: '_blank' do %>
+              <%= image_tag review.image(1).url(:portrait), class: 'smooth', alt: review.title, width: review.image(1).width(:portrait), height: review.image(1).height(:portrait)%>
+            <% end %>
+            <% if review.images_count > 1 %>
+              <div class="review_image__see_more">+ 사진 더보기</div>
+            <% end %>
+          </div>
+        <% end %>
+        <div class="action">
+          <%
+          likes = likes?(review)
+          like = get_like(review)
+          %>
+          <%= content_tag :div, class: "action__like like-action #{(like.score > 0 ? 'liked' : 'unliked') if likes}", data: {url: like_mobile_review_path(review)} do %>
+            <a class="link-like btn">
+              <i class="fa fa-thumbs-up"></i>
+              <span>좋아요</span>
+            </a>
+          <% end %>
+          <div class="action__new_comment">
+            <div class="new-comments">
+              <%= form_for Comment.new, url: mobile_comments_path, validate: true, remote: true, data: {login_required: true} do |f| %>
+                <%= f.text_field :message, placeholder: t('reviews.comments.please_write_comments'), class: 'input-block', data: {login_required: true} %>
+                <%= f.hidden_field :review_id, value: review.id %>
+                <%= content_tag :button, t('post'), class: 'btn btn-lg new-comments__button' %>
+                <input type="hidden" name="tracking_id">
+                <% if current_user %>
+                  <script class="blueprint" type="text/x-jquery-tmpl">
+                    <%= render "comments/comment", comment: Comment.template(current_user, review) %>
+                  </script>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% if my_last_review?(review) %>
+        <%= content_tag :div, t('reviews.label_my_review'), class: "my-review-tag#{' my-review-tag--' + brand.locale[0..1] if brand.locale != 'ko-KR'}" %>
+      <% elsif review.new? %>
+        <div class="new-tag">new</div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

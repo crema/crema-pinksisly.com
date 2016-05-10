@@ -14,3 +14,107 @@ body.products.reviews {
     margin-top: -5px;
   }
 }
+
+body.products.reviews.widget_style_custom {
+  .review-inner {
+    @include clearfix;
+    position: relative;
+    padding: 4px 9px;
+    width: 100%;
+    background: white;
+    border: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    .panel-review {
+      padding: 0;
+    }
+  }
+
+  li.review {
+    margin: 0;
+    padding: 4px 0;
+    position: relative;
+    background: #c9ccd2;
+
+    .action-info {
+      position: absolute;
+      right: 8px;
+      top: 28px;
+    }
+
+    &:first-child {
+      padding-top: 8px;
+    }
+
+    &:last-child {
+      padding-bottom: 8px;
+    }
+
+    .message {
+      font-weight: normal;
+    }
+
+    .see-more {
+      color: #7f8492;
+    }
+
+    .new-comments {
+      border: 2px solid #e4e4e4;
+      line-height: 22px;
+      padding: 4px 50px 4px 12px;
+    }
+
+    .new-comments__button {
+      border-left: 2px solid #e4e4e4;
+      height: 32px;
+      width: 47px;
+    }
+
+    .review_image {
+      text-align: center;
+      margin: 25px auto;
+      width: 215px;
+      position: relative;
+    }
+
+    .review_image__see_more {
+      position: absolute;
+      right: 7px;
+      bottom: 7px;
+      font-size: 15px;
+      color: white;
+      text-align: right;
+      text-shadow: 0 0 8px black;
+    }
+
+    .action {
+      @include clearfix;
+      border: 1px solid #e4e4e4;
+      margin-bottom: 5px;
+    }
+
+    .action__like {
+      width: 80px;
+      float: left;
+      line-height: 52px;
+      font-size: 14px;
+      text-align: center;
+      border-right: 1px solid #e4e4e4;
+    }
+
+    .action__new_comment {
+      margin-left: 80px;
+      padding: 8px 12px;
+    }
+
+    .liked {
+      color: #4472f3;
+    }
+
+    .my-review-tag, .new-tag {
+      top: 3px;
+    }
+  }
+}

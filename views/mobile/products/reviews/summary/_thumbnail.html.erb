@@ -1,0 +1,27 @@
+<div id="review-photo-thumbnails" class="photo-review-digits-count-<%= @photo_reviews_count.to_s.length %>">
+  <div id="review-photo-summary">
+    <%= content_tag :a, class: "link-photo-reviews #{'selected' if @review_filter == ReviewFilterType::PHOTO}", data: {filter: ReviewFilterType::PHOTO} do %>
+      <div class="show-all-photo-reviews">
+        <%= t('products.reviews.show_photo_reviews') %>
+        <span class="sprites-check"></span>
+      </div>
+      <div class="count-text">
+        (<%= t('products.reviews.photo_reviews_count_mobile_html', count: @photo_reviews_count) %>)
+      </div>
+    <% end %>
+  </div>
+
+  <ul class="product-thumbnail-container">
+    <% review_images[0..15].each do |image| %>
+      <li class="photo_thumbnail photo photo-review-thumbnail">
+        <% review = image.review %>
+        <%= link_to photo_review_popup_mobile_review_path(review, photo_index: image.index), target: '_blank' do %>
+          <%= image_tag image.url(:thumbnail), class: 'review-image smooth', alt: review.title, width: 56, height: 56 %>
+        <% end %>
+      </li>
+    <% end %>
+    <% (1..(15 - @photo_reviews_count)).each do |i| %>
+      <li class="photo-review-thumbnail photo-review-thumbnail-empty"></li>
+    <% end %>
+  </ul>
+</div>
