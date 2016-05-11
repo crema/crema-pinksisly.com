@@ -15,7 +15,7 @@
             <% end %>
           <% end %>
         </div>
-        <%= render 'products/reviews/summary/thumbnail' %>
+        <%= render 'products/reviews/summary/thumbnail' if @photo_reviews_count > 0 %>
       </div>
       <div class="panel-body">
         <% if @reviews.empty? %>

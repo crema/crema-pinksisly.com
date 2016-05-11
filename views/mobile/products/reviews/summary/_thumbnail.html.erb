@@ -12,7 +12,7 @@
   </div>
 
   <ul class="product-thumbnail-container">
-    <% review_images[0..15].each do |image| %>
+    <% review_images.select {|r| r.class == ReviewImageUploader}[0..15].each do |image| %>
       <li class="photo_thumbnail photo photo-review-thumbnail">
         <% review = image.review %>
         <%= link_to photo_review_popup_mobile_review_path(review, photo_index: image.index), target: '_blank' do %>
