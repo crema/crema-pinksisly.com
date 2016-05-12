@@ -9,9 +9,12 @@
   -moz-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.04);
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.04);
 
+  .r-contents {
+    padding-left: 108px;
+  }
+
   .image-container {
     position: relative;
-    padding-left: 108px;
     overflow: hidden;
 
     .link-product-image {
@@ -27,7 +30,7 @@
       &.cover {
         position: absolute;
         top: 36px;
-        left: 108px;
+        left: 0;
         height: 100%;
         pointer-events: none;
       }
