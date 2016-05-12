@@ -7,7 +7,7 @@
   <% if @product %>
     <%= content_tag :div, class: "panel panel-reviews #{'no-data' if @reviews.total_count == 0}" do %>
       <div class="panel-heading">
-        <%= render @product, review_source: review_source %>
+        <%= render @product, review_source: review_source, display_product_buttons: true %>
         <div class="sort_types">
           <% review_sort_types.each_with_index do |review_sort_type, i| %>
             <%= content_tag :div, class: "sort_types__sort_type #{'sort_types__sort_type--selected' if review_sort_type == @review_sort} #{'sort_types__sort_type--last' if i == (review_sort_types.count - 1)}" do %>

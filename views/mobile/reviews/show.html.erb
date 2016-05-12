@@ -6,7 +6,7 @@
     <% review_source = WrittenSource::BRAND_MOBILE_REVIEW_DETAIL %>
     <% if @review.product %>
       <div class="panel-heading no-border">
-        <%= render @review.product, review_source: review_source, editable_review: @review.editable?(current_user) ? @review : nil %>
+        <%= render @review.product, review_source: review_source, display_product_buttons: true, editable_review: @review.editable?(current_user) ? @review : nil %>
       </div>
     <% end %>
     <div class="panel-body no-border">
