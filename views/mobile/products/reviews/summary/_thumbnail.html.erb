@@ -2,8 +2,8 @@
   <div id="review-photo-summary">
     <%= content_tag :a, class: "link-photo-reviews #{'selected' if @review_filter == ReviewFilterType::PHOTO}", data: {filter: ReviewFilterType::PHOTO} do %>
       <div class="show-all-photo-reviews">
+        <span class="link-photo-reviews__checked">&check;</span>
         <%= t('products.reviews.show_photo_reviews') %>
-        <span class="sprites-check"></span>
       </div>
       <div class="count-text">
         (<%= t('products.reviews.photo_reviews_count_mobile_html', count: @photo_reviews_count) %>)

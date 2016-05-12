@@ -1,0 +1,7 @@
+.link-photo-reviews__checked {
+  display: none;
+}
+
+.link-photo-reviews.selected .link-photo-reviews__checked {
+  display: inline;
+}
