@@ -130,14 +130,14 @@
 .sort_types__sort_type {
   float: left;
   width: 33%;
-  display: inline-block;
   border-right: 1px solid #e4e4e4;
   text-align: center;
-  padding: 14px;
   font-size: 15px;
 
   a {
+    padding: 14px 0;
     color: #6a6a6a;
+    display: block;
   }
 }
 

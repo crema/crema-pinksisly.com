@@ -11,7 +11,9 @@
         <div class="sort_types">
           <% review_sort_types.each_with_index do |review_sort_type, i| %>
             <%= content_tag :div, class: "sort_types__sort_type #{'sort_types__sort_type--selected' if review_sort_type == @review_sort} #{'sort_types__sort_type--last' if i == (review_sort_types.count - 1)}" do %>
-              <%= link_to ajax_path(order: review_sort_type, aloading: '.page'), remote: true do %><span class="sort-type"><%= ReviewSort.t(review_sort_type) %></span><% end %>
+              <%= link_to ajax_path(order: review_sort_type, aloading: '.page'), remote: true do %>
+                <span class="sort-type"><%= ReviewSort.t(review_sort_type) %></span>
+              <% end %>
             <% end %>
           <% end %>
         </div>
