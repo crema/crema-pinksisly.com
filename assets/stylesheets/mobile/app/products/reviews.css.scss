@@ -13,9 +13,7 @@ body.products.reviews {
   ul.reviews {
     margin-top: -5px;
   }
-}
 
-body.products.reviews.widget_style_custom {
   .review-inner {
     @include clearfix;
     position: relative;
