@@ -1,6 +1,6 @@
 <% set_product_link_type = false if !local_assigns[:set_product_link_type] %>
 <% set_reviews_new_link = false if !local_assigns[:set_reviews_new_link] %>
-<% reviews = product.visible_reviews %>
+<% reviews = product.meta_visible_reviews %>
 <% tag = local_assigns[:tag] ? tag : :div %>
 <%= content_tag_for tag, product do %>
   <div class="l-contents">

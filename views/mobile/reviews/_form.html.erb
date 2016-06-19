@@ -32,7 +32,7 @@ end
             <% if message.blank? %>
               <%= t('reviews.review_reward_short_message', args).html_safe %>
             <% else %>
-              <%= (message.interpolation_safe % args).html_safe %>
+              <%= message.interpolate_safe(args).html_safe %>
             <% end %>
           </div>
           <div class="r-contents">

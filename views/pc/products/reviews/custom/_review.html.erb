@@ -8,7 +8,7 @@
       <% end %>
     </div>
     <div class="col title">
-      <%= content_tag :a, review.message.first_line(Settings.max_review_chars_per_line).html_safe, class: 'link-expand' %>
+      <%= content_tag :a, review.message.first_line(Settings.max_review_chars_per_line), class: 'link-expand' %>
       <%= content_tag :a, "(#{review.comments_count})", class: 'review-count' if review.comments_count > 0 %>
     </div>
     <div class="col likes list">
