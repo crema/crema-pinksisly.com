@@ -166,6 +166,7 @@ end
           </div>
         </div>
       </div>
+      <a href="http://www.pinksisly.com/m/page.html?id=11"><img src="http://pinksisly.cdn.smart-img.com/renewal/img/mreview_btn.jpg" style="width: 100%;"></a>
       <div class="review-submit-container">
         <%= f.submit t('reviews.forms.label_save'), class: 'btn btn-block review-submit-button', data: {disable_with: t('reviews.forms.label_saving')}, disabled: @preview %>
       </div>
@@ -176,7 +177,6 @@ end
     <%= render 'common/shared/form_upload_image' %>
   </div>
 </div>
-<div>크리마</div>
 <% if @brand.review_reward_notice_html.present? %>
   <script type="text/x-jquery-tmpl" id="review_info_tmpl">
     <div class="modal-content">
