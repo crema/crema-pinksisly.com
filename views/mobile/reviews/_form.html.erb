@@ -20,20 +20,7 @@ end
       <div class="panel sub-panel reward-notice-container panel-reward-info">
         <div class="panel-body">
           <div class="l-contents">
-            <%
-              args = {
-                user_name: current_user.name,
-                max_best_mileage: number_with_delimiter(@brand.max_basic_mileage_for_text_review + @brand.give_mileage_to_best_review),
-                max_mileage: number_with_delimiter(@brand.max_basic_mileage_for_text_review),
-                photo_queen_reward: number_with_delimiter(@brand.give_mileage_to_best_review)
-              }
-              message = @brand.review_reward_notice_short
-            %>
-            <% if message.blank? %>
-              <%= t('reviews.review_reward_short_message', args).html_safe %>
-            <% else %>
-              <%= message.interpolate_safe(args).html_safe %>
-            <% end %>
+            <%= review_reward_notice_message %>
           </div>
           <div class="r-contents">
             <% if @sub_order && !@brand.review_reward_notice_html.blank? %>
