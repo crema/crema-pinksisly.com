@@ -37,7 +37,7 @@
     </div>
     <div class="product-move">
       <div class="button-icon">
-        <%= link_to product.url, class: 'link-product-button' do %>
+        <%= link_to product.url, class: 'link-product-button', target: '_blank' do %>
           <img src="https://admin.cre.ma/custom/pinksisly-com/assets/images/pc/sprites/clothes.png" class="clothes-icon">
         <% end %>
         <%= content_tag :span, nil, class: "sprites-clothes" %>
@@ -60,7 +60,7 @@
       <%= @review.message %>
     </div>
     <div class="review-top">
-      <%= link_to mobile_review_url(@review, close_url: close_url), class: 'link-to-review' do %>
+      <%= link_to mobile_review_url(@review, close_url: close_url), class: 'link-to-review', target: '_blank' do %>
         <div class="product-thumbnail">
           <%= image_tag(product.image.url(:extra_small), width: 28, height: 28) if product %>
         </div>
