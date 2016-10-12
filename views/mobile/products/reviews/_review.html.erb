@@ -87,8 +87,14 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
         <% end %>
         <% if review.images_count > 0 %>
           <div class="review_image">
-            <%= link_to photo_review_popup_mobile_review_path(review, photo_index: 1), target: '_blank' do %>
-              <%= image_tag review.image(1).url(:portrait), class: 'smooth', alt: review.title, width: review.image(1).width(:portrait), height: review.image(1).height(:portrait)%>
+            <%= content_tag(
+              :a,
+              class: 'photo-review-popup',
+              data: {
+                photo_review_popup_url: photo_review_popup_mobile_review_path(review, photo_index: 1)
+              }
+            ) do %>
+              <%= image_tag review.image(1).url(:portrait), class: 'review-image smooth', alt: review.title, width: review.image(1).width(:portrait), height: review.image(1).height(:portrait) %>
             <% end %>
             <% if review.images_count > 1 %>
               <div class="review_image__see_more">+ 사진 더보기</div>
