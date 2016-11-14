@@ -11,7 +11,7 @@
         리뷰 (<%= content_tag :span, number_with_delimiter(product_reviews.total_count), class: 'reviews-count' %>)
       </span>
       <% @brand.review_sort_types(ReviewGroupBy::NONE).select{|r| r != @review_sort}.each do |review_sort_type| %>
-      <span class="review-sort-type-column"> | </span><%= link_to ajax_path(order: review_sort_type), remote: true do %><span class="sort-type"><%= ReviewSort.t(review_sort_type) %></span><% end %>
+      <span class="review-sort-type-column"> | </span><%= link_to ajax_path(sort: review_sort_type), remote: true do %><span class="sort-type"><%= ReviewSort.t(review_sort_type) %></span><% end %>
       <% end %>
     </div>
     <div class="clear"></div>
