@@ -1,8 +1,8 @@
 <% content_for :content do %>
   <% product = @review.product %>
   <%= content_tag :div, id: 'main', data: {review_id: @review.id} do %>
-    <%= content_tag :div, id: 'page-container', data: {total_pages: @photos_count, current_page: @photo_index} do %>
-      <% (1..@photos_count).each do |i| %>
+    <%= content_tag :div, id: 'page-container', data: {total_pages: review.images_count, current_page: @photo_index} do %>
+      <% (1..review.images_count).each do |i| %>
         <% image_url = @review.image(i).url %>
         <%= content_tag :div, class: "image-container page page-#{i}", data: {page: i, image_url: image_url} do %>
           <%= image_tag image_url, class: 'smooth photo without-margin' %>
@@ -50,7 +50,7 @@
     <div class="button-name"><%= t('reviews.label_close') %></div>
   </div>
   <div class="index-indicator without-summary">
-    <% (1..@photos_count).each do |i| %>
+    <% (1..review.images_count).each do |i| %>
       <span class="indicator indicator-<%= i %>"></span>
     <% end %>
   </div>
@@ -78,7 +78,7 @@
       <% end %>
     </div>
     <div class="index-indicator with-summary">
-      <% (1..@photos_count).each do |i| %>
+      <% (1..review.images_count).each do |i| %>
         <span class="indicator indicator-<%= i %>"></span>
       <% end %>
     </div>
