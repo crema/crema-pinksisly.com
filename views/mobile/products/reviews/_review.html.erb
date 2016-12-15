@@ -7,10 +7,17 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
   <div class="review-inner">
     <%= content_tag :div, class: 'panel panel-review' do %>
       <div class="panel-body no-border">
-        <div class="star-wrap">
+        <div class="pinksisly_com_mobile_product_review_top">
           <% if @brand.review_show_score %>
             <%= render 'reviews/star_rating', score: review.score %>
           <% end %>
+          <%= render 'reviews/tag', review: review %>
+          <%= link_to(
+            t('reviews.edit_review'),
+            edit_mobile_review_path(review),
+            data: {link_target: 'window'},
+            class: 'pinksisly_com_mobile_product_review_top__edit'
+          ) if review.editable?(current_user) %>
         </div>
         <%= content_tag :div, class: "name brand-user-grade-display-type-#{@brand.brand_user_grade_display_type_in_reviews_index}#{' without-date' if !@brand.review_show_created_at}" do %>
           <%= review_user_display_name(review) %>
@@ -129,11 +136,6 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
           </div>
         </div>
       </div>
-      <% if my_last_review?(review) %>
-        <%= content_tag :div, t('reviews.label_my_review'), class: "my-review-tag#{' my-review-tag--' + brand.locale[0..1] if brand.locale != 'ko-KR'}" %>
-      <% elsif review.new? %>
-        <div class="new-tag">new</div>
-      <% end %>
     <% end %>
   </div>
 <% end %>

@@ -39,7 +39,7 @@ body.products.reviews {
     .action-info {
       position: absolute;
       right: 8px;
-      top: 28px;
+      top: 46px;
     }
 
     &:first-child {
@@ -109,10 +109,6 @@ body.products.reviews {
 
     .liked {
       color: #4472f3;
-    }
-
-    .my-review-tag, .new-tag {
-      top: 3px;
     }
   }
 }
