@@ -1,0 +1,28 @@
+.pinksisly_com_mobile_product_review_top {
+  height: 26px;
+  line-height: 26px;
+  position: relative;
+  padding: 8px 0 10px 0;
+  box-sizing: content-box;
+}
+
+.pinksisly_com_mobile_product_review_top .star-rating-container {
+  display: inline-block;
+}
+
+.pinksisly_com_mobile_product_review_top .review_tag {
+  position: static;
+  display: inline-block;
+}
+
+.pinksisly_com_mobile_product_review_top__edit {
+  position: absolute;
+  right: 0;
+  top: 8px;
+  height: 26px;
+  border: 1px solid #e4e4e4;
+  color: #969696;
+  display: inline-block;
+  padding: 0 9px;
+  font-size: 11px;
+}
