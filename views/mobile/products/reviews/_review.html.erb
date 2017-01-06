@@ -96,9 +96,9 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
           <div class="review_image">
             <%= content_tag(
               :a,
-              class: 'photo-review-popup',
+              class: 'link-fullscreen-popup',
               data: {
-                photo_review_popup_url: photo_review_popup_mobile_review_path(review, photo_index: 1)
+                url: photo_review_popup_mobile_review_path(review, photo_index: 1)
               }
             ) do %>
               <%= image_tag review.image(1).url(:portrait), class: 'review-image smooth', alt: review.title, width: review.image(1).width(:portrait), height: review.image(1).height(:portrait) %>
