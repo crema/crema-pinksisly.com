@@ -17,9 +17,9 @@
         <% review = image.review %>
         <%= content_tag(
           :a,
-          class: 'photo-review-popup',
+          class: 'link-fullscreen-popup',
           data: {
-            photo_review_popup_url: photo_review_popup_mobile_review_path(review, photo_index: image.index)
+            url: photo_review_popup_mobile_review_path(review, photo_index: image.index)
           }
         ) do %>
           <%= image_tag image.url(:thumbnail), class: 'review-image smooth', alt: review.title, width: 56, height: 56 %>
