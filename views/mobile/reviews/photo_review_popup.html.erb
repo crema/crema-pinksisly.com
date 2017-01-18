@@ -60,7 +60,7 @@
       <%= @review.message %>
     </div>
     <div class="review-top">
-      <%= link_to mobile_review_url(@review, close_url: close_url), class: 'link-to-review', target: '_blank' do %>
+      <%= link_to mobile_review_url(@review), class: 'link-to-review', target: '_blank' do %>
         <div class="product-thumbnail">
           <%= image_tag(product.image.url(:extra_small), width: 28, height: 28) if product %>
         </div>
