@@ -17,6 +17,10 @@
         <div class="button-name">공유</div>
       </div>
       <div class="share-buttons hidden">
+        <%= content_tag :a, data: {url: share_mobile_review_path(review), media: 'styleshare', message: review.share_message(ShareReviewHistorySnsType::STYLESHARE)}, class: 'share-button' do %>
+          <div class="button-icon"><%= image_tag manual_asset_url('social-media/share-styleshare.png'), width: 22, height: 22 %></div>
+          <div class="button-name"><%= t('reviews.popup.label_styleshare') %></div>
+        <% end %>
         <%= content_tag :a, data: {url: share_mobile_review_path(@review), media: 'instagram'}, class: 'share-button' do %>
           <div class="button-icon"><i class="fa fa-instagram"></i></div>
           <div class="button-name">인스타그램</div>
