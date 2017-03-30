@@ -101,7 +101,11 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
                 url: photo_review_popup_mobile_review_path(review, photo_index: 1)
               }
             ) do %>
-              <%= image_tag review.image(1).url(:portrait), class: 'review-image smooth', alt: review.title, width: review.image(1).width(:portrait), height: review.image(1).height(:portrait) %>
+              <%
+                review_image_1 = review.image(1)
+                w, h = review_image_1.dimension(version_name: :portrait)
+              %>
+              <%= image_tag review_image_1.url(:portrait), class: 'review-image smooth', alt: review.title, width: w, height: h %>
             <% end %>
             <% if review.images_count > 1 %>
               <div class="review_image__see_more">+ 사진 더보기</div>
