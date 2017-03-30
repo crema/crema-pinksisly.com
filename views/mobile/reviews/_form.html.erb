@@ -61,7 +61,7 @@ end
         data: {
           review_message_default: @brand.review_message_default,
           already_posted: @review.new_record? && @review.product.already_posted?(current_user) ? t('reviews.form.already_posted') : nil,
-          already_posted_return_url: app ? pending_mobile_reviews_url : nil,
+          already_posted_return_url: widget_env_stand_alone? ? pending_mobile_reviews_url : nil,
           alert_requirement: @brand.review_alert_mileage_requirement_before_submit,
           disable_save_requirement: @brand.disable_review_with_insufficient_review_length
         } do |f| %>
