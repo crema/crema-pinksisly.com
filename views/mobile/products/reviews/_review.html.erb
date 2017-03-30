@@ -103,7 +103,7 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
             ) do %>
               <%
                 review_image_1 = review.image(1)
-                w, h = review_image_1.dimension(version_name: :portrait)
+                w, h = review_image_1.dimension(:portrait)
               %>
               <%= image_tag review_image_1.url(:portrait), class: 'review-image smooth', alt: review.title, width: w, height: h %>
             <% end %>
